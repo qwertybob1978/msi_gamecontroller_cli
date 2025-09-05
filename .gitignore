@@ -8,3 +8,5 @@
 /x64/Debug
 /JoystickInput/JoystickInput.vcxproj.filters
 /JoystickInput/JoystickInput.vcxproj.user
+/web/node_modules
+/web/build
