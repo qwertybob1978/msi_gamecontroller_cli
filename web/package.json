@@ -1,0 +1,127 @@
+{
+  "name": "joystick-web-app",
+  "version": "1.0.0",
+  "description": "Web-based joystick/gamepad input application using Emscripten and Node.js with graphical controller visualization",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build-wasm": "emcc joystick_web.cpp -o build/joystick.js -s WASM=1 -s EXPORTED_FUNCTIONS=\"['_ListGamepads','_StartStreaming','_StopStreaming','_UpdateGamepadState','_IsStreaming','_GetSelectedGamepad']\" -s EXPORTED_RUNTIME_METHODS=\"['ccall','cwrap']\" -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL=0 -s DISABLE_EXCEPTION_CATCHING=0 -O2 --bind",
+    "build-wasm-debug": "emcc joystick_web.cpp -o build/joystick.js -s WASM=1 -s EXPORTED_FUNCTIONS=\"['_ListGamepads','_StartStreaming','_StopStreaming','_UpdateGamepadState','_IsStreaming','_GetSelectedGamepad']\" -s EXPORTED_RUNTIME_METHODS=\"['ccall','cwrap']\" -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL=0 -s DISABLE_EXCEPTION_CATCHING=0 -s ASSERTIONS=1 -O0 -g --bind",
+    "copy-wasm": "cp build/joystick.js public/ && cp build/joystick.wasm public/",
+    "build": "npm run build-wasm && npm run copy-wasm",
+    "build-debug": "npm run build-wasm-debug && npm run copy-wasm",
+    "clean": "rm -rf build/* public/joystick.js public/joystick.wasm",
+    "setup": "npm install && mkdir -p build public && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint server.js",
+    "format": "prettier --write \"**/*.{js,json,md}\"",
+    "check-emscripten": "emcc --version"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1"
+  },
+  "keywords": [
+    "gamepad",
+    "joystick",
+    "emscripten",
+    "webassembly",
+    "wasm",
+    "nodejs",
+    "express",
+    "socket.io",
+    "realtime",
+    "html5",
+    "cpp",
+    "xinput",
+    "directinput",
+    "web-gamepad-api",
+    "controller",
+    "input-device",
+    "visualization",
+    "gauges",
+    "charts"
+  ],
+  "author": {
+    "name": "Joystick Web App",
+    "email": "",
+    "url": "https://github.com/qwertybob1978/msi_gamecontroller_cli"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qwertybob1978/msi_gamecontroller_cli.git",
+    "directory": "web"
+  },
+  "bugs": {
+    "url": "https://github.com/qwertybob1978/msi_gamecontroller_cli/issues"
+  },
+  "homepage": "https://github.com/qwertybob1978/msi_gamecontroller_cli#readme",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "server.js",
+    "joystick_web.cpp",
+    "build.sh",
+    "public/",
+    "README.md"
+  ],
+  "config": {
+    "port": 3000
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es2021": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "rules": {
+      "no-console": "off",
+      "no-unused-vars": "warn"
+    }
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "server.js",
+      "public/"
+    ],
+    "ext": "js,html,css",
+    "ignore": [
+      "node_modules/",
+      "build/",
+      "public/joystick.js",
+      "public/joystick.wasm"
+    ],
+    "env": {
+      "NODE_ENV": "development"
+    }
+  }
+}
