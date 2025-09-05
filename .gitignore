@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/JoystickInput/x64/Debug
+/packages
+/x64/Debug
+/JoystickInput/JoystickInput.vcxproj.filters
+/JoystickInput/JoystickInput.vcxproj.user
